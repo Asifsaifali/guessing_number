@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rust Guessing Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Enter the Number to Guess!</h1>
+    <input id="guess" type="number" placeholder="Enter the number" />
+    <br />
+    <button onclick="submitGuess()">Check</button>
+    <p id="result"></p>
+  </div>
+
+  <script type="module">
+    import init, { start_game, check_guess } from "./pkg/guessing_game.js";
+
+    async function run() {
+      await init();
+      start_game();
+    }
+
+    window.submitGuess = function () {
+      const input = document.getElementById("guess");
+      const resultEl = document.getElementById("result");
+
+      const guess = parseInt(input.value, 10);
+      const result = check_guess(guess);
+
+      resultEl.textContent = result;
+      resultEl.classList.remove("win");
+
+      if (result === "You win!") {
+        resultEl.classList.add("win");
+      }
+    };
+
+    run();
+  </script>
+</body>
+</html>
